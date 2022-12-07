@@ -79,3 +79,17 @@ public class PostService {
         return ("게시글 삭제 성공!");
     }
 }
+
+ /*
+ public String deletePost(Long id, PasswordDto requestDto){
+    Post post = postRepository.findbyId(id).orElseThrow(
+        () -> new IllegalArgunentException("아이디가 존재하지 않습니다.")
+        );
+        if(post.getPassword().equals(requestDto.getPassword())){
+        postRepository.deletByUd(id);
+        }else {
+            throw new IllehalArgumentException("비밀번호가 틀렸습니다.");
+            }
+            return("게시글 삭제 성공 ! " )
+ }
+  */
