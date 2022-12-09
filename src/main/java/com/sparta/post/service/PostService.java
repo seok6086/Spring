@@ -53,7 +53,7 @@ public class PostService {
     //등록
     @Transactional
     public ResponsePostDto createPost(PostRequestDto postDto, HttpServletRequest request) {
-        //request로 토큰 가져오고
+        //request로 토큰
         String token = jwtUtil.resolveToken(request);
         Claims claims;
 
@@ -72,27 +72,27 @@ public class PostService {
 
             return new ResponsePostDto(post);
         }else{
-            return null;
+            return new ResponsePostDto();
         }
     }
 
     //수정
     @Transactional
     public Post updatePost(Long id, PostRequestDto requestDto, HttpServletRequest request) {
-        //Request에서 Token 가져오기
+
         String token = jwtUtil.resolveToken(request);
         Claims claims;
 
-        //토큰이 있는 경우에만 게시글 수정 가능
+
         if (token != null) {
             if (jwtUtil.validateToken(token)) {
-                //토큰에서 사용자 정보 가져오기
+
                 claims = jwtUtil.getUserInfoFromToken(token);
             } else {
                 throw new IllegalArgumentException("Token Error");
             }
 
-            //토큰에서 가져온 사용자 정보를 사용하여 DB 조회
+
             User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(
                     () -> new IllegalArgumentException("사용자가 존재하지 않습니다.")
             );
@@ -108,23 +108,23 @@ public class PostService {
         }
     }
 
-    //삭제
+
     @Transactional
     public ResponseDto deletePost(Long id, HttpServletRequest request) {
-        //Request에서 Token 가져오기
+
         String token = jwtUtil.resolveToken(request);
         Claims claims;
 
-        //토큰이 있는 경우에만 게시글 삭제 가능
+
         if (token != null) {
             if (jwtUtil.validateToken(token)) {
-                //토큰에서 사용자 정보 가져오기
+
                 claims = jwtUtil.getUserInfoFromToken(token);
             } else {
                 throw new IllegalArgumentException("Token Error");
             }
 
-            //토큰에서 가져온 사용자 정보를 사용하여 DB 조회
+
             User user = userRepository.findByUsername(claims.getSubject()).orElseThrow(
                     () -> new IllegalArgumentException("사용자가 존재하지 않습니다.")
             );
